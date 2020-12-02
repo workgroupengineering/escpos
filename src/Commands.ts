@@ -18,7 +18,11 @@ export enum DrawerPin {
 export enum Font {
     A = 0,
     B,
-    C
+    C,
+    D,
+    E,
+    SpecialA = 97,
+    SpecialB = 98
 }
 
 export enum Barcode {
