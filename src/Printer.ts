@@ -2,7 +2,7 @@ import * as iconv from "iconv-lite";
 import Adapter from "./Adapter";
 import { Barcode, CodeTable, Color, DrawerPin, Font,
     Justification, PDF417ErrorCorrectLevel, PDF417Type,
-    Position, QRErrorCorrectLevel, RasterMode, TextMode, Underline } from "./Commands";
+    Position, QRErrorCorrectLevel, QRModel, RasterMode, TextMode, Underline } from "./Commands";
 import Image from "./Image";
 import MutableBuffer from "./MutableBuffer";
 
@@ -171,27 +171,39 @@ export default class Printer {
         return this;
     }
 
-    public qr(code: string, errorCorrect: QRErrorCorrectLevel, size: 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16): Printer {
-        this.write(GS);
-        this.write("(k");
-        this.buffer.writeUInt16LE(code.length + 3);
-        this.write(new Uint8Array([49, 80, 48]));
-        this.write(code);
+    public qr(code: string,options?: {
+            model?: QRModel,
+            errorCorrect?: QRErrorCorrectLevel,
+            size?: 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16
+        }): Printer {
+            const model = options?.model ?? QRModel.MODEL1;
+            const errorCorrect = options?.errorCorrect ?? QRErrorCorrectLevel.L;
+            const size = options?.size ?? 4;
+            this.write(new Uint8Array([ 0x1D, 0x28, 0x6B,0x04, 0x00, 0x31, 0x41,model,0x0]));
+            // Set data
+            this.write(GS);
+            this.write("(k");
+            this.buffer.writeUInt16LE(code.length + 3);
+            this.write(new Uint8Array([49, 80, 48]));
+            this.write(code);
+            // Sett Error correction
+            this.write(GS);
+            this.write("(k");
+            this.write(new Uint8Array([3, 0, 49, 69]));
+            this.write(errorCorrect);
 
-        this.write(GS);
-        this.write("(k");
-        this.write(new Uint8Array([3, 0, 49, 69]));
-        this.write(errorCorrect);
+            // Set QR Size
+            this.write(GS);
+            this.write("(k");
+            this.write(new Uint8Array([3, 0, 49, 67]));
+            this.write(size);
 
-        this.write(GS);
-        this.write("(k");
-        this.write(new Uint8Array([3, 0, 49, 67]));
-        this.write(size);
+            // Print
+            this.write(GS);
+            this.write("(k");
+            this.write(new Uint8Array([3, 0, 49, 81, 48]));
+            return this;
 
-        this.write(GS);
-        this.write("(k");
-        this.write(new Uint8Array([3, 0, 49, 81, 48]));
-        return this;
     }
 
     public pdf417(code: string, type: PDF417Type = PDF417Type.Standard, height: number = 1,

@@ -102,6 +102,12 @@ export enum QRErrorCorrectLevel {
     H
 }
 
+export enum QRModel {
+    MODEL1 = 49,
+    MODEL2 = 50,
+    MICRO  = 51
+}
+
 export enum PDF417ErrorCorrectLevel {
     Level1 = 48,
     Level2,
