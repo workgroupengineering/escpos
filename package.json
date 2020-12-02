@@ -1,8 +1,8 @@
 {
   "version": "2.0.0",
-  "name": "escpos-print",
+  "name": "escpos",
   "bugs": {
-    "url": "https://github.com/haavardlian/escpos/issues"
+    "url": "https:/github.com/workgroupengineering/escpos/issues"
   },
   "keywords": [
     "esc/pos",
@@ -10,42 +10,49 @@
     "typescript"
   ],
   "description": "Library for printing to ESC/POS compatible printers",
-  "homepage": "https://github.com/haavardlian/escpos",
-  "main": "src/index.js",
-  "typings": "src/",
+  "homepage": "https:/github.com/workgroupengineering/escpos",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
-    "src/"
+    "lib/*"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/haavardlian/escpos.git"
+    "url": "https:/github.com/workgroupengineering/escpos.git"
   },
   "author": {
-    "name": "Håvard Lian",
-    "email": "haavard@64bit.no",
-    "url": "https://github.com/haavardlian"
+    "name": "Giuseppe Lippolis",
+    "email": "workgroupengineering@outlook.com",
+    "url": "https://github.com/workgroupengineering"
   },
-  "contributors": [],
+  "contributors": [
+    {
+      "name": "Håvard Lian (Original developer)",
+      "email": "haavard@64bit.no",
+      "url": "https://github.com/haavardlian"
+    }
+  ],
   "devDependencies": {
-    "@types/node": "10.12.17",
-    "@types/serialport": "7.0.1",
-    "@types/usb": "1.1.6",
-    "@types/pngjs": "3.3.2",
-    "@types/ws": "6.0.1",
-    "fs-extra": "7.0.1",
-    "ts-node": "7.0.1",
-    "tslint": "5.12.0",
-    "typescript": "3.2.2"
+    "@types/node": "^14.14.10",
+    "@types/pngjs": "^3.3.2",
+    "@types/serialport": "^8.0.1",
+    "@types/usb": "^1.1.6",
+    "@types/ws": "^6.0.1",
+    "@serialport/bindings": "^9.0.2",
+    "fs-extra": "^7.0.1",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.0",
+    "typescript": "^3.7.5"
   },
   "dependencies": {
-    "iconv-lite": "0.4.24",
-    "pngjs": "3.3.3"
+    "iconv-lite": "^0.4.24",
+    "pngjs": "^3.3.3"
   },
   "optionalDependencies": {
-    "serialport": "7.1.0",
-    "usb": "1.5.0",
-    "ws": "6.1.2"
+    "serialport": "^7.1.0",
+    "usb": "^1.6.3",
+    "ws": "^6.1.2"
   },
   "scripts": {
     "compile": "tsc",
