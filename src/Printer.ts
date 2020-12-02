@@ -104,7 +104,7 @@ export default class Printer {
 
     public cut(partial: boolean = false): Printer {
         this.write(GS);
-        this.write("V");
+        this.write("VA");
         this.write(partial ? 1 : 0);
         return this;
     }
