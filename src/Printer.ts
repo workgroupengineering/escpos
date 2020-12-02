@@ -240,10 +240,22 @@ export default class Printer {
         return this;
     }
 
-    public beep(): Printer {
+    /*
+    * Printer Buzzer (Beep sound)
+    * @param  {[Number]} n Refers to the number of beep, default = 3
+    * @param  {[Number]} t Refers to the buzzer sound length in (t * 100) milliseconds, default 1000 milliseconds.
+    */
+    public beep(n?: number, t?: number): Printer {
         this.write(ESC);
-        this.write("(A");
-        this.write(new Uint8Array([4, 0, 48, 51, 3, 15]));
+        this.write("B");
+        if(!n) {
+            n = 3;
+        }
+        if(!t) {
+            t = 10;
+        }
+        this.write(n);
+        this.write(t);
         return this;
     }
 
