@@ -23,6 +23,7 @@ export default class Network extends Adapter {
         this.options = {address,
             port
         };
+        this.connected = false;
 
         this.device.on("close", () => {
             this.connected = false;
