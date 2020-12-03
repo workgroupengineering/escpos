@@ -42,6 +42,7 @@ jspm_packages
 
 # Compiled typescript
 dist/
+lib/
 
 # Test image
 sign.png
