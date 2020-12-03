@@ -41,6 +41,8 @@ export default class Usb extends Adapter {
 
         this.vid = vid;
         this.pid = pid;
+        this.device = null;
+        this.endpoint = null;
 
         addEventListener("detatch", device => {
             if (device === this.device) {
