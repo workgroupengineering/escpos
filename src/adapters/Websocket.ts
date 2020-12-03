@@ -1,4 +1,4 @@
-import * as WebSocket from "ws";
+import WebSocket from "ws";
 import Adapter from "../Adapter";
 
 export default class Websocket extends Adapter {

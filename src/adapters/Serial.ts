@@ -1,4 +1,4 @@
-import * as SerialPort from "serialport";
+import SerialPort from "serialport";
 import Adapter from "../Adapter";
 
 export default class Serial extends Adapter {
