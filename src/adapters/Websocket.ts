@@ -9,6 +9,8 @@ export default class Websocket extends Adapter {
     constructor(address: string) {
         super();
         this.address = address;
+        this.device = null;
+        this.connected = false;
     }
 
     public async open(): Promise<void> {
