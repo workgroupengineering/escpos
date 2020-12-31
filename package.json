@@ -36,10 +36,6 @@
   "devDependencies": {
     "@types/node": "^14.14.10",
     "@types/pngjs": "^3.3.2",
-    "@types/serialport": "^8.0.1",
-    "@types/usb": "^1.1.6",
-    "@types/ws": "^6.0.1",
-    "@serialport/bindings": "^9.0.2",
     "fs-extra": "^7.0.1",
     "ts-node": "^7.0.1",
     "tslint": "^5.12.0",
@@ -48,11 +44,6 @@
   "dependencies": {
     "iconv-lite": "^0.4.24",
     "pngjs": "^3.3.3"
-  },
-  "optionalDependencies": {
-    "serialport": "^7.1.0",
-    "usb": "^1.6.3",
-    "ws": "^6.1.2"
   },
   "scripts": {
     "compile": "tsc",
