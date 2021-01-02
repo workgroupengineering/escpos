@@ -6,7 +6,22 @@ const files = [
     'LICENSE',
 ];
 
-Promise.all(files.map(file => copyFile(file))).then(() => createPackageFile());
+Promise.all(files.map(file => copyFile(file)))
+    .then(() => createPackageFile())
+    .then(()=>{
+        const srcDir = path.resolve(__dirname,'../lib/');
+        const destDir = path.resolve(__dirname,'../dist/');
+
+        console.log(`Start copying compiled files form ${srcDir} to ${destDir}...`)
+        // To copy a folder or file
+        fse.copySync(srcDir, destDir,{ recursive: true }, function (err) {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log("copying success!");
+            }
+        });
+    });
 
 async function copyFile(file) {
     const buildPath = resolveBuildPath(file);
@@ -53,7 +68,7 @@ async function createPackageFile() {
         version,
         description,
         main: './index.js',
-        typings: './',
+        types: './index.d.ts',
         keywords,
         repository,
         license,
