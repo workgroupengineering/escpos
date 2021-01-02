@@ -3,7 +3,7 @@ import Adapter from "./Adapter";
 import { Barcode, CodeTable, Color, DrawerPin, Font,
     Justification, PDF417ErrorCorrectLevel, PDF417Type,
     Position, QRErrorCorrectLevel, QRModel, RasterMode, TextMode, Underline } from "./Commands";
-import Image from "./Image";
+import { IRaster } from "./IRaster";
 import MutableBuffer from "./MutableBuffer";
 
 const ESC = 0x1B;
@@ -282,9 +282,8 @@ export default class Printer {
         return this;
     }
 
-    public raster(image: Image, mode: RasterMode = RasterMode.Normal): Printer {
+    public raster(raster: IRaster, mode: RasterMode = RasterMode.Normal): Printer {
         const header = new Uint8Array([GS, 0x76, 0x30, mode]);
-        const raster = image.toRaster();
         this.buffer.write(header);
         this.buffer.writeUInt16LE(raster.width);
         this.buffer.writeUInt16LE(raster.height);

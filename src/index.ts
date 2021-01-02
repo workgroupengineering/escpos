@@ -1,11 +1,11 @@
-import * as Adapters from "./Adapters";
+import Adapter from "./Adapter";
 import * as Commands from "./Commands";
-import * as Image from "./Image";
+import * as IRaster from "./IRaster";
 import Printer from "./Printer";
 
 export {
-    Adapters,
+    Adapter,
     Commands,
-    Image,
+    IRaster,
     Printer
 };
