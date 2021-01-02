@@ -1,4 +1,4 @@
-import * as iconv from "iconv-lite";
+import iconv from "iconv-lite";
 import Adapter from "./Adapter";
 import { Barcode, CodeTable, Color, DrawerPin, Font,
     Justification, PDF417ErrorCorrectLevel, PDF417Type,

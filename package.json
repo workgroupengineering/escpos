@@ -47,5 +47,8 @@
     "preversion": "node scripts/isMaster.js && npm run lint",
     "version": "npm run pack",
     "postversion": "git push && git push --tags"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.6.2"
   }
 }
