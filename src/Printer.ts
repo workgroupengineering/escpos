@@ -1,9 +1,9 @@
-import * as iconv from "iconv-lite";
+import iconv from "iconv-lite";
 import Adapter from "./Adapter";
 import { Barcode, CodeTable, Color, DrawerPin, Font,
     Justification, PDF417ErrorCorrectLevel, PDF417Type,
-    Position, QRErrorCorrectLevel, RasterMode, TextMode, Underline } from "./Commands";
-import Image from "./Image";
+    Position, QRErrorCorrectLevel, QRModel, RasterMode, TextMode, Underline } from "./Commands";
+import { IRaster } from "./IRaster";
 import MutableBuffer from "./MutableBuffer";
 
 const ESC = 0x1B;
@@ -104,7 +104,7 @@ export default class Printer {
 
     public cut(partial: boolean = false): Printer {
         this.write(GS);
-        this.write("V");
+        this.write("VA");
         this.write(partial ? 1 : 0);
         return this;
     }
@@ -171,27 +171,39 @@ export default class Printer {
         return this;
     }
 
-    public qr(code: string, errorCorrect: QRErrorCorrectLevel, size: 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16): Printer {
-        this.write(GS);
-        this.write("(k");
-        this.buffer.writeUInt16LE(code.length + 3);
-        this.write(new Uint8Array([49, 80, 48]));
-        this.write(code);
+    public qr(code: string,options?: {
+            model?: QRModel,
+            errorCorrect?: QRErrorCorrectLevel,
+            size?: 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16
+        }): Printer {
+            const model = options?.model ?? QRModel.MODEL1;
+            const errorCorrect = options?.errorCorrect ?? QRErrorCorrectLevel.L;
+            const size = options?.size ?? 4;
+            this.write(new Uint8Array([ 0x1D, 0x28, 0x6B,0x04, 0x00, 0x31, 0x41,model,0x0]));
+            // Set data
+            this.write(GS);
+            this.write("(k");
+            this.buffer.writeUInt16LE(code.length + 3);
+            this.write(new Uint8Array([49, 80, 48]));
+            this.write(code);
+            // Sett Error correction
+            this.write(GS);
+            this.write("(k");
+            this.write(new Uint8Array([3, 0, 49, 69]));
+            this.write(errorCorrect);
 
-        this.write(GS);
-        this.write("(k");
-        this.write(new Uint8Array([3, 0, 49, 69]));
-        this.write(errorCorrect);
+            // Set QR Size
+            this.write(GS);
+            this.write("(k");
+            this.write(new Uint8Array([3, 0, 49, 67]));
+            this.write(size);
 
-        this.write(GS);
-        this.write("(k");
-        this.write(new Uint8Array([3, 0, 49, 67]));
-        this.write(size);
+            // Print
+            this.write(GS);
+            this.write("(k");
+            this.write(new Uint8Array([3, 0, 49, 81, 48]));
+            return this;
 
-        this.write(GS);
-        this.write("(k");
-        this.write(new Uint8Array([3, 0, 49, 81, 48]));
-        return this;
     }
 
     public pdf417(code: string, type: PDF417Type = PDF417Type.Standard, height: number = 1,
@@ -240,10 +252,22 @@ export default class Printer {
         return this;
     }
 
-    public beep(): Printer {
+    /*
+    * Printer Buzzer (Beep sound)
+    * @param  {[Number]} n Refers to the number of beep, default = 3
+    * @param  {[Number]} t Refers to the buzzer sound length in (t * 100) milliseconds, default 1000 milliseconds.
+    */
+    public beep(n?: number, t?: number): Printer {
         this.write(ESC);
-        this.write("(A");
-        this.write(new Uint8Array([4, 0, 48, 51, 3, 15]));
+        this.write("B");
+        if(!n) {
+            n = 3;
+        }
+        if(!t) {
+            t = 10;
+        }
+        this.write(n);
+        this.write(t);
         return this;
     }
 
@@ -258,9 +282,8 @@ export default class Printer {
         return this;
     }
 
-    public raster(image: Image, mode: RasterMode = RasterMode.Normal): Printer {
+    public raster(raster: IRaster, mode: RasterMode = RasterMode.Normal): Printer {
         const header = new Uint8Array([GS, 0x76, 0x30, mode]);
-        const raster = image.toRaster();
         this.buffer.write(header);
         this.buffer.writeUInt16LE(raster.width);
         this.buffer.writeUInt16LE(raster.height);

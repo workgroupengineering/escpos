@@ -7,10 +7,15 @@
 - Bar code printing (Regular, QR, PDF417)
                            
 ## Usage example:
+
+```bash
+npm install github:workgroupengineering/escpos-Network@latest
+```
+
 ```javascript
-import Printer from 'escpos-print/Printer';
+import Printer from 'escpos/Printer';
 import { Font, Justification, TextMode } from 'escpos-print/Commands';
-import { Network } from 'escpos-print/Adapters';
+import { Network } from 'escpos-Network/Adapters';
 
 const adapter = new Network("192.168.0.102", 9100);
 const printer = await new Printer(adapter).open();

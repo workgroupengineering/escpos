@@ -18,7 +18,11 @@ export enum DrawerPin {
 export enum Font {
     A = 0,
     B,
-    C
+    C,
+    D,
+    E,
+    SpecialA = 97,
+    SpecialB = 98
 }
 
 export enum Barcode {
@@ -96,6 +100,12 @@ export enum QRErrorCorrectLevel {
     M,
     Q,
     H
+}
+
+export enum QRModel {
+    MODEL1 = 49,
+    MODEL2 = 50,
+    MICRO  = 51
 }
 
 export enum PDF417ErrorCorrectLevel {
