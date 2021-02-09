@@ -282,12 +282,14 @@ export default class Printer {
         return this;
     }
 
-    public raster(raster: IRaster, mode: RasterMode = RasterMode.Normal): Printer {
-        const header = new Uint8Array([GS, 0x76, 0x30, mode]);
-        this.buffer.write(header);
-        this.buffer.writeUInt16LE(raster.GetWidth());
-        this.buffer.writeUInt16LE(raster.GetHeight());
-        this.buffer.write(raster.GetData());
+    public raster(raster: IRaster | undefined, mode: RasterMode = RasterMode.Normal): Printer {
+        if(raster) {
+            const header = new Uint8Array([GS, 0x76, 0x30, mode]);
+            this.buffer.write(header);
+            this.buffer.writeUInt16LE(raster.GetWidth());
+            this.buffer.writeUInt16LE(raster.GetHeight());
+            this.buffer.write(raster.GetData());
+        }
         return this;
     }
 
