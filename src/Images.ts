@@ -9,19 +9,18 @@ export class EscPosImage implements IRaster {
     private readonly height: number;
     private readonly width: number;
 
-    constructor(pixels:Uint8Array,  width: number, height: number){
+    constructor(pixels: Uint8Array,  width: number, height: number) {
         this.data = pixels;
         this.height = height;
         this.width = width;
     }
-    GetData(): Uint8Array {
+    public GetData(): Uint8Array {
         return this.data;
     }
-    GetHeight(): number {
+    public GetHeight(): number {
         return this.height;
     }
-    GetWidth(): number {
+    public GetWidth(): number {
         return this.width;
-    }    
+    }
 }
-
