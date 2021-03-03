@@ -293,8 +293,9 @@ export default class Printer {
         return this;
     }
 
-    public writeLine(value: string, encoding?: string): Printer {
-        return this.write(`${value}\n`, encoding);
+    public writeLine(value?: string, encoding?: string): Printer {
+        this.write(`${value || ""}\n`, encoding);
+        return this;
     }
 
     public writeList(values: string[], encoding?: string): Printer {
