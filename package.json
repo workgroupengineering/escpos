@@ -1,5 +1,5 @@
 {
-  "version": "3.0.2",
+  "version": "3.0.3",
   "name": "escpos",
   "bugs": {
     "url": "https:/github.com/workgroupengineering/escpos/issues"
@@ -42,6 +42,7 @@
   },
   "scripts": {
     "prepare": "tsc",
+    "prepack": "tsc",
     "compile": "tsc",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "pack": "npm run compile && node scripts/createPackageDir.js",
